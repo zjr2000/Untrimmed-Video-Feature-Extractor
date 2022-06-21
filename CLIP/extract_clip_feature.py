@@ -97,7 +97,7 @@ if __name__ == '__main__':
     parser.add_argument('--device', default='cuda',
                         help='Device to train on (default: cuda)')
 
-    parser.add_argument('--batch-size', default=128, type=int,
+    parser.add_argument('--batch-size', default=16, type=int,
                         help='Batch size per GPU (default: 32)')
     parser.add_argument('--workers', default=6, type=int,
                         help='Number of data loading workers (default: 6)')
