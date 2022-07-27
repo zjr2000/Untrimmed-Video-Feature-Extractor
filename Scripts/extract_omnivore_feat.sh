@@ -4,15 +4,14 @@
 ########################## PARAMETERS THAT NEED TO BE SET ##########################
 ####################################################################################
 
-DATA_PATH=/devdata1/VideoCaption/ActivityNet/processd_raw_videos/all/
-METADATA_CSV_FILENAME=/devdata1/VideoCaption/FeatureExtraction/activitynet_v1-3_test_metadata.csv
-
+DATA_PATH=
+METADATA_CSV_FILENAME=
 MODEL_NAME=omnivore_swinL_imagenet21k
-
+OUTPUT_DIR=
 # Choose the stride between clips, e.g. STRIDE = CLIP_LEN for non-overlapping clips and STRIDE = 1 for dense overlapping clips
-CLIP_LEN=8
-STRIDE=8
-FRAME_RATE=30
+CLIP_LEN=
+STRIDE=
+FRAME_RATE=
 
 # Optional: Split the videos into multiple shards for parallel feature extraction
 # Increase the number of shards and run this script independently on separate GPU devices,
@@ -34,11 +33,14 @@ if [ -z "$METADATA_CSV_FILENAME" ]; then
     exit 1
 fi
 
+if [ -z "$OUTPUT_DIR" ]; then
+    echo "OUTPUT_DIR is not set."
+    exit 1
+fi
+
 ####################################################################################
 ############################# PARAMETERS TO KEEP AS IS #############################
 ####################################################################################
-
-OUTPUT_DIR=/devdata1/anet_omnivore_feat/fps_${FRAME_RATE}_len_${CLIP_LEN}_stride_${STRIDE}/
 # OUTPUT_DIR=anet_omnivore_feat/fps_${FRAME_RATE}_len_${CLIP_LEN}_stride_${STRIDE}/
 
 mkdir -p $OUTPUT_DIR

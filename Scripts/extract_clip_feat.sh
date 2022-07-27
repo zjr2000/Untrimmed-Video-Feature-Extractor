@@ -4,14 +4,13 @@
 ########################## PARAMETERS THAT NEED TO BE SET ##########################
 ####################################################################################
 
-DATA_PATH=/devdata1/VideoCaption/ActivityNet/processd_raw_videos/all/
-METADATA_CSV_FILENAME=/devdata1/VideoCaption/FeatureExtraction/activitynet_v1-3_train_metadata.csv
-
+DATA_PATH=
+METADATA_CSV_FILENAME=
+OUTPUT_DIR=
 CLIP_BACKBONE=ViT-L/14@336px
-
 # Choose the stride between clips, e.g. 16 for non-overlapping clips and 1 for dense overlapping clips
-STRIDE=8
-FRAME_RATE=15
+STRIDE=
+FRAME_RATE=
 
 # Optional: Split the videos into multiple shards for parallel feature extraction
 # Increase the number of shards and run this script independently on separate GPU devices,
@@ -39,11 +38,14 @@ if [ -z "$CLIP_BACKBONE" ]; then
     exit 1
 fi
 
+if [ -z "$OUTPUT_DIR" ]; then
+    echo "OUTPUT_DIR is not set."
+    exit 1
+fi
+
 ####################################################################################
 ############################# PARAMETERS TO KEEP AS IS #############################
 ####################################################################################
-
-OUTPUT_DIR=anet_clip_feat/fps_${FRAME_RATE}_stride_${STRIDE}/
 
 mkdir -p $OUTPUT_DIR
 
