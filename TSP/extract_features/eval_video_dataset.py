@@ -63,6 +63,9 @@ class EvalVideoDataset(Dataset):
 
         # get a tensor [clip_length, H, W, C] of the video frames between clip_t_start and clip_t_end seconds
         vframes, _, _ = read_video(filename=filename, start_pts=clip_t_start, end_pts=clip_t_end, pts_unit='sec')
+        if len(vframes) == 0:
+            raise ValueError(f'corrupted video {filename} from {clip_t_start}s to {clip_t_end}s')
+        
         idxs = EvalVideoDataset._resample_video_idx(self.clip_length, fps, self.frame_rate)
         vframes = vframes[idxs][:self.clip_length] # [:self.clip_length] for removing extra frames if isinstance(idxs, slice)
         if vframes.shape[0] != self.clip_length:
@@ -131,12 +134,16 @@ class EvalVideoDataset(Dataset):
             'is-last-clip': [],
         }
         for i, row in df.iterrows():
+            filename=row['filename']
             total_frames_after_resampling = int(row['video-frames'] * (float(frame_rate) / row['fps']))
             idxs = EvalVideoDataset._resample_video_idx(total_frames_after_resampling, row['fps'], frame_rate)
             if isinstance(idxs, slice):
                 frame_idxs = np.arange(row['video-frames'])[idxs]
             else:
                 frame_idxs = idxs.numpy()
+            if len(frame_idxs) < clip_length:
+                print(f'Warning: skip the video {filename} which has a length small than clip_length={clip_length}')
+                continue
             clip_t_start = list(frame_idxs[np.arange(0,frame_idxs.shape[0]-clip_length+1,stride)]/row['fps'])
             num_clips = len(clip_t_start)
 
