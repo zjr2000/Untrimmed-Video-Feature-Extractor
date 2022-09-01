@@ -1,0 +1,12 @@
+name: Video-Feature-Extractor
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - pandas
+  - h5py
+  - av
+  - joblib
+  - tqdm
+  - pillow=6.1
