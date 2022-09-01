@@ -2,7 +2,7 @@
 Long and untrimmed video learning has recieved increasing attention in recent years. This repo aims to provide some simple and effective scripts for long and untrimmed video feature extraction. We adopt the video processing pipline from [TSP](https://github.com/HumamAlwassel/TSP) and adapt it with several awesome vision pretraining backbones.
 
 ## Environment
-Run `conda env create -f environment.yml` for base environment setup. For specific model setup, please check their project link:
+Run `conda env create -f environment.yaml` for base environment setup. For specific model setup, please check their project link:
 
 [Video Swin Transformer](https://github.com/SwinTransformer/Video-Swin-Transformer)
 
